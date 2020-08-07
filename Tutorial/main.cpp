@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "io.h"
+#include "guess.h"
 #include "quizzes.h"
 
 /*
@@ -12,7 +13,9 @@ int main() {
 
 	// chap4quiz3();
 	// chap6quiz1();
-	chap6quiz3();
+	// chap6quiz3();
+
+	start();
 
 	return 0;
 }
