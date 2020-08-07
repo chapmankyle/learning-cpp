@@ -1,7 +1,8 @@
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>  // for std::rand() and std::srand()
+#include <ctime>    // for std::time()
 
+#include "guess.h"
 #include "io.h"
 
 /*
@@ -12,7 +13,6 @@
 void greeting(int min, int max) {
 	std::cout << "Hello there!\n\nLet's play a guessing game, where you try to guess the number I am thinking ...\n";
 	std::cout << "Hint: it's a number between " << min << " and " << max << " (inclusive)\n\n";
-	srand(time(nullptr));
 }
 
 /*
@@ -22,15 +22,20 @@ void greeting(int min, int max) {
  * @return A random number.
  */
 int generateRandomNumber(int min, int max) {
-	return rand() % (max - min + 1) + min;
+	static constexpr double fraction { 1.0 / RAND_MAX };  // only calculates value once
+
+	// throw away first random number (bug with Visual Studio)
+	std::rand();
+
+	return min + static_cast<int>((max - min + 1) * (std::rand() * fraction));
 }
 
-/*
- * Starts the guessing game.
- */
 void start() {
 	int minNum{ 10 };
 	int maxNum{ 40 };
+
+	// set seed
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
 	greeting(minNum, maxNum);
 
