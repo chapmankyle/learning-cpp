@@ -41,5 +41,8 @@
     <ClInclude Include="quizzes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="guess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
