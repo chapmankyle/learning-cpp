@@ -765,11 +765,11 @@ void chap5point9() {
 }
 
 /*
- * Chapter 6.1
+ * Chapter P.6.1
  * Arrays (Part I)
  * (https://www.learncpp.com/cpp-tutorial/61-arrays-part-i/)
  */
-void chap6point1() {
+void chapPpoint1() {
 	// zero initialize array of size 4
 	double someArray[4]{};
 
@@ -781,11 +781,11 @@ void chap6point1() {
 }
 
 /*
- * Chapter 6.2
+ * Chapter P.6.2
  * Arrays (Part II)
  * (https://www.learncpp.com/cpp-tutorial/62-arrays-part-ii/)
  */
-void chap6point2() {
+void chapPpoint2() {
 	// if array has greater size than declaration, rest will be zeros
 	int prime[5]{ 1, 3, 5, 7 };
 
@@ -834,7 +834,7 @@ void chap6point2() {
 
 	// find size of array using std::size() [need to #include <iterator>]
 	int findingSize[]{ 1, 2, 3, 4, 5, 6 };
-	int sizeOfArray1{ std::size(findingSize) }; // added in C++17
+	int sizeOfArray1{ static_cast<int>(std::size(findingSize)) }; // added in C++17
 
 	// find size of array using sizeof()
 	int sizeOfArray2{ sizeof(findingSize) / sizeof(findingSize[0]) };
