@@ -1,12 +1,16 @@
-#include <bitset>   // for std::bitset
-#include <string>   // for std::string and std::getline
-#include <iterator> // for std::size()
+#include <algorithm>   // for std::sort()
+#include <bitset>      // for std::bitset
+#include <iterator>    // for std::size()
+#include <string>      // for std::string and std::getline
+#include <string_view> // for std::string_view
+#include <utility>     // for std::swap()
 
-#include <ctime>    // for std::time()
-#include <cstdint>  // for std::int_fast#_t and std::int_least#_t
-#include <cstdlib>  // for std::rand() and std::srand()
+#include <cstddef>     // for std::nullptr_t
+#include <cstdint>     // for std::int_fast#_t and std::int_least#_t
+#include <cstdlib>     // for std::rand() and std::srand()
+#include <ctime>       // for std::time()
 
-#include <typeinfo> // for typeid()
+#include <typeinfo>    // for typeid()
 #include <iostream>
 
 // preprocessor macros
@@ -838,5 +842,123 @@ void chapPpoint2() {
 
 	// find size of array using sizeof()
 	int sizeOfArray2{ sizeof(findingSize) / sizeof(findingSize[0]) };
+}
+
+/*
+ * Chapter P.6.4
+ * Sorting using selection sort
+ * (https://www.learncpp.com/cpp-tutorial/64-sorting-an-array-using-selection-sort/)
+ */
+void chapPpoint4() {
+	// selection sort
+	int arr[]{ 30, 50, 20, 10, 40 };
+	constexpr int length{ static_cast<int>(std::size(arr)) };
+
+	// last element will already be sorted when we get there
+	for (int i{ 0 }; i < length - 1; ++i) {
+		// assume smallest element is first element
+		int minIdx{ i };
+
+		// look for smaller element
+		for (int j{ i + 1 }; j < length; ++j) {
+			if (arr[j] < arr[i]) {
+				minIdx = j;
+			}
+		}
+
+		// swap indices
+		std::swap(arr[i], arr[minIdx]);
+	}
+
+	// alternatively, use std::sort() from <algorithm> header
+	int otherArr[]{ 30, 50, 20, 10, 40 };
+
+	// sorts in-place
+	std::sort(std::begin(otherArr), std::end(otherArr));
+}
+
+/*
+ * Chapter P.6.5
+ * Multidimensional arrays
+ * (https://www.learncpp.com/cpp-tutorial/65-multidimensional-arrays/)
+ */
+void chapPpoint5() {
+	// order is [<num_rows>][<num_cols>]
+	// can only omit left-most length specifier
+	int arr[][3]{ {1, 2, 3}, {4, 5, 6} };
+}
+
+/*
+ * Chapter P.6.6a
+ * An introduction to std::string_view
+ * (https://www.learncpp.com/cpp-tutorial/6-6a-an-introduction-to-stdstring_view/)
+ */
+void chapPpoint6() {
+	// can create strings using a character array
+	char text[]{ "hello" };
+
+	// copies value into a seperate string object
+	std::string str1{ text };
+	std::string str2{ str1 };
+
+	// string_view is simply a view onto a string
+	// i.e. does not copy string, instead refers to original string
+	// any operation done to string is changed in original string
+
+	// std::string and std::string_view cannot be concatenated
+	// if std::string_view refers to string that is out of scope, causes
+	// undefined behaviour
+}
+
+/*
+ * Chapter P.6.7
+ * Introduction to pointers
+ * (https://www.learncpp.com/cpp-tutorial/67-introduction-to-pointers/)
+ */
+void chapPpoint7() {
+	// define normal variable
+	int x{ 5 };
+
+	// store address of (&) variable in pointer
+	int *addrX{ &x };
+
+	// store value of (*), a.k.a dereference, variable
+	int valX{ *(&x) };
+
+	// for variables => put asterisk next to variable name
+	// for functions => put asterisk next to return type
+
+	// pointer size depends on size of type the pointer is storing
+	// i.e.  int => pointer of size 4 bytes
+	//       char => pointer of size 1 byte
+}
+
+/*
+ * Chapter P.6.7a
+ * Null pointers
+ * (https://www.learncpp.com/cpp-tutorial/6-7a-null-pointers/)
+ */
+void chapPpoint7a() {
+	// use nullptr to denote a null pointer
+	int *x{ nullptr };
+
+	// can specify null pointer to function by using null pointer type
+	std::nullptr_t ptr{ nullptr };
+}
+
+/*
+ * Chapter P.6.8a
+ * Pointer arithmetic and array indexing
+ * (https://www.learncpp.com/cpp-tutorial/6-8a-pointer-arithmetic-and-array-indexing/)
+ */
+void chapPpoint8a() {
+	// arrays *decay* into a pointer that points to the first element
+	int arr[]{ 1, 2, 3, 4, 5 };
+
+	// we can index into array using pointers { arr[n] == *(arr + n) }
+	int firstElem{ *arr };
+	int secondElem{ *(arr + 1) };
+
+	// trying to print address of character pointer will print garbage
 }
 
