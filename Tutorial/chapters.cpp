@@ -962,3 +962,101 @@ void chapPpoint8a() {
 	// trying to print address of character pointer will print garbage
 }
 
+/*
+ * Chapter P.6.9
+ * Dynamic memory allocation with new and delete
+ * (https://www.learncpp.com/cpp-tutorial/69-dynamic-memory-allocation-with-new-and-delete/)
+ */
+void chapPpoint9() {
+	int *ptr{ new int }; // dynamically allocate an integer
+	*ptr = 7;            // assign value to memory allocated
+
+	delete ptr; // return memory to operating system
+
+	// any further references to ptr will cause undefined behaviour (dangling pointer)
+
+	int *otherPtr{ new int{ 7 } }; // use uniform initialization for dynamic variable
+
+	// check if memory has been allocated
+	int *val{ new (std::nothrow) int{} }; // val will be set to nullptr if allocation fails
+	if (!val) {
+		std::cout << "Could not allocate memory";
+	}
+
+	// have to delete to stop memory leaks (does nothing if val == nullptr)
+	delete val;
+
+	// if dynamically allocated variable does not get deleted,
+	// can cause memory leak since the address is lost when variable
+	// goes out of scope
+}
+
+/*
+ * Chapter P.6.9a
+ * Dynamically allocating arrays
+ * (https://www.learncpp.com/cpp-tutorial/6-9a-dynamically-allocating-arrays/)
+ */
+void chapPpoint9a() {
+	// dynamic array allocation
+	std::size_t arrLength{ 2 }; // needs to be size_t or use a static_cast<std::size_t>(...)
+	int *arr{ new int[arrLength] };
+
+	// dynamic array deletion
+	delete[] arr;
+
+	// show differences between const pointers and normal pointers
+	int val{ 5 };
+	const int *ptr1 = &val; // ptr1 points to "const int" => pointer to constant value
+	int *const ptr2 = &val; // ptr2 points to an "int" => const pointer to non-const value
+	const int *const ptr3 = &val; // ptr3 points to "const int" => constant pointer to const value
+}
+
+/*
+ * Chapter P.6.11
+ * References
+ * (https://www.learncpp.com/cpp-tutorial/611-references/)
+ */
+void chapPpoint11() {
+	// keep reference to value
+	int value{ 5 };
+	int &ref{ value };
+
+	// setting or getting the value from a reference will alter the original value
+	// l-value (ell-value) is value that has an address in memory
+	// r-value (arr-value) is value that is not an l-value
+
+	// when needing to change the value of a variable, use a reference as the parameter
+	// i.e.
+	//   void changeN(int &ref) {
+	//       ref = 6;
+	//   }
+	//   int main() {
+	//       int n{ 5 };
+	//       std::cout << n << '\n';
+	//       changeN(n);
+	//       std::cout << n << '\n';
+	//       return 0;
+	//   }
+
+	// can be used to reference nested values in structs, for example:
+	struct Point {
+		float x;
+		float y;
+	};
+
+	struct Rectangle {
+		Point p1;
+		Point p2;
+		Point p3;
+		Point p4;
+	};
+
+	Rectangle rect{};
+	float &fx{ rect.p1.x }; // access nested float
+
+	// member selection using pointer to struct
+	Rectangle *r{ &rect };
+	(*r).p1.x = 21.3; // valid
+	r->p1.x = 22.4;   // equally valid and preferred
+}
+
