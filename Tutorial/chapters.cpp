@@ -1,3 +1,4 @@
+#include <array>       // for std::array
 #include <algorithm>   // for std::sort()
 #include <bitset>      // for std::bitset
 #include <iterator>    // for std::size()
@@ -1060,3 +1061,52 @@ void chapPpoint11() {
 	r->p1.x = 22.4;   // equally valid and preferred
 }
 
+/*
+ * Chapter P.6.12a
+ * For-each loops
+ * (https://www.learncpp.com/cpp-tutorial/6-12a-for-each-loops/)
+ */
+void chapPpoint12() {
+	// looping over array using for-each
+	constexpr int fibonacci[]{ 0, 1, 1, 2, 3, 5, 8, 13 };
+	for (int num : fibonacci) { // copies each element from array
+		std::cout << num << ' ';
+	}
+	std::cout << '\n';
+
+	// using 'auto' keyword is better than typing entire type
+	// using 'const' keyword is preferred when not changing value
+	// using '&' (reference) is preferred if the elements are NON-FUNDAMENTAL data types
+	std::string names[]{ "Kyle", "Beb", "Declan" };
+	for (const auto &name : names) {
+		std::cout << name << ' ';
+	}
+	std::cout << '\n';
+}
+
+/*
+ * Chapter P.6.13
+ * Void pointers
+ * (https://www.learncpp.com/cpp-tutorial/613-void-pointers/)
+ */
+void chapPpoint13() {
+	// void pointers can point to any data type
+	int val{ 5 };
+	void *ptr{ &val };
+
+	// in order to use it, pointer must be explicitly cast to another type
+	int *intPtr{ static_cast<int*>(ptr) };
+
+	// used mainly for passing to functions
+	// i.e.  printPointer(void *ptr)
+	// can call `printPointer(int *ptr)`
+}
+
+/*
+ * Chapter P.6.15
+ * An introduction to std::array
+ * (https://www.learncpp.com/cpp-tutorial/6-15-an-introduction-to-stdarray/)
+ */
+void chapPpoint15() {
+
+}
