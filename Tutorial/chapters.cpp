@@ -1108,5 +1108,79 @@ void chapPpoint13() {
  * (https://www.learncpp.com/cpp-tutorial/6-15-an-introduction-to-stdarray/)
  */
 void chapPpoint15() {
+	// create array
+	std::array numbers{ 0, 1, 2, 3, 4 };
 
+	// can use [] or .at to get element
+	int someNum{ numbers[2] }; // no bounds-checking
+	someNum = numbers.at(1);   // bounds-checking
+
+	// get the length of the array
+	int len = numbers.size();
+
+	// always pass std::array by reference or const reference
+
+	// can sort in ascending or descending order
+	std::sort(numbers.begin(), numbers.end());   // increasing order
+	std::sort(numbers.rbegin(), numbers.rend()); // decreasing order
+
+	// can use for-each
+	for (int num : numbers) {
+		std::cout << num << ' ';
+	}
+	std::cout << '\n';
+
+	// BE CAREFUL when using a normal for loop because `size` returns size_type (unsigned)
+	// use 'std::size_t' keyword for index variable, since std::array::size_type is alias for std::size_t
+	for (std::size_t i{ 0 }; i < numbers.size(); ++i) {
+		std::cout << numbers[i] << ' ';
+	}
+	std::cout << '\n';
+
+	// reverse for loop DOES NOT work like you think
+	// the below code produces an infinite loop
+	// 1) for (auto i{ numbers.size() - 1 }; i >= 0; --i) {
+	// 2)     ...
+	// 3) }
+	// this is because the result of `numbers.size() - 1` will be an unsigned int,
+	// thus always >= 0
+
+	// WORKING reverse for loop, but looks odd
+	for (auto i{ numbers.size() }; i-- > 0; ) {
+		std::cout << numbers[i] << ' ';
+	}
+	std::cout << '\n';
+	// works because we decrement after comparison, so it wraps around for
+	// the last time, but we don't use that result
+
+	// cannot brace initialize an array of structs
+
+	// std::array - fixed size array
+	// std::vector - dynamically allocated array (allows for resize)
 }
+
+/*
+ * Chapter P.6.18
+ * Introduction to standard library algorithms
+ * (https://www.learncpp.com/cpp-tutorial/introduction-to-standard-library-algorithms/)
+ */
+void chapPpoint18() {
+	std::array numbers{ 1, 2, 3, 4, 8 };
+	int search{ 5 };
+
+	// find an element in array, returning end if not found or iterator pointing to element
+	auto found{ std::find(numbers.begin(), numbers.end(), search) };
+
+	// check if found element
+	if (found == numbers.end()) {
+		std::cout << "Could not find " << search << '\n';
+	}
+
+	// check if string array contains string
+	std::array<std::string_view, 4> arr{ "apple", "banana", "orange", "lemon" };
+	bool contains = arr[0].find("nana") != std::string_view::npos;
+
+	// use std::for_each to apply a function to each element in array
+	// std::for_each(arr.begin(), arr.end(), doubleNum);
+}
+
