@@ -5,6 +5,7 @@
 #include <string>      // for std::string and std::getline
 #include <string_view> // for std::string_view
 #include <utility>     // for std::swap()
+#include <vector>      // for std::vector
 
 #include <cstddef>     // for std::nullptr_t
 #include <cstdint>     // for std::int_fast#_t and std::int_least#_t
@@ -1182,5 +1183,45 @@ void chapPpoint18() {
 
 	// use std::for_each to apply a function to each element in array
 	// std::for_each(arr.begin(), arr.end(), doubleNum);
+
+	// vector used for dynamic arrays
+	std::vector someVec{ "hi", "there" };
+}
+
+/*
+ * Chapter F.7.4
+ * Passing arguments by value, reference and address
+ * (https://www.learncpp.com/cpp-tutorial/74-passing-arguments-by-address/)
+ */
+void chapFpoint4() {
+	// pass by value
+	//  - copies value from parameter and is destroyed after function call
+	//  - best used for passing primitive data types
+	//  - e.g:  void func(int val);
+
+	// pass by reference
+	//  - uses actual value from parameter, so changing param is possible
+	//  - best used for passing non-primitive data types and to change parameter
+	//  - e.g:  void func(std::array &arr);
+
+	// pass by address
+	//  - uses the address of the value as a parameter (actually decays to pass-by-value)
+	//  - prefer pass-by-reference instead
+	//  - e.g:  void func(int *x);
+
+
+	// return by value
+	//  - best used when returning variables that were declared inside function
+	//  - e.g:  int func(int val);
+
+	// return by reference
+	//  - best used when returning variables that were passed by reference or when returning a struct/class
+	//  - e.g:  std::array& func(std::array &arr);
+
+	// return by address
+	//  - best used when returning dynamically allocated memory
+	//  - e.g:  int* func(int *val);
+
+	// `static` inside function ensures variable is not destroyed when function ends
 }
 
